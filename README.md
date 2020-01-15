@@ -1,2 +1,0 @@
-# anotherlist
-Created with CodeSandbox
