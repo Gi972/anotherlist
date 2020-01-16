@@ -1,11 +1,10 @@
 import * as React from "react";
+import { TODO } from "../types";
 
-type TRow = { title: string; status: boolean };
-
-export function Row({ title, status }: TRow) {
+export function Todo({ id, title, status }: TODO) {
   return (
     <li>
-      <div> {title} </div>
+      {id} {title}
       <input type="checkbox" checked={status} />
     </li>
   );
