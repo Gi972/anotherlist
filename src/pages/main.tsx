@@ -1,37 +1,64 @@
 import * as React from "react";
 import { TodoList } from "../atoms/todoList";
 import { AddTodo } from "../atoms/addTodo";
-import { TODO } from "../types";
+import { FilterTask } from "../atoms/filterTask";
+import { TODO, MAINSTATE, E_FILTERTASK } from "../types";
 import { useImmer } from "use-immer";
 import { of } from "rxjs";
 
-type STATE = { tasks: TODO[] };
-
 export function Main({ data }) {
-  const [todolist, updateTodo] = useImmer({ tasks: data } as STATE);
+  const [mainState, updateMainState] = useImmer({
+    tasks: data,
+    filter: E_FILTERTASK.All
+  } as MAINSTATE);
 
-  of(todolist).subscribe(data => {
+  of(mainState).subscribe(data => {
     localStorage.setItem("myTodo", JSON.stringify(data.tasks));
   });
 
   return (
     <>
       <AddTodo
-        onSubmit={e => {
-          updateTodo((draftState: STATE) => {
+        onSubmit={title => {
+          updateMainState((draftState: MAINSTATE) => {
             draftState.tasks.push({
               id: Date.now(),
-              title: e,
+              title: title,
               status: false
             } as TODO);
           });
         }}
       />
       <TodoList
-        rows={todolist.tasks}
+        filter={mainState.filter}
+        rows={mainState.tasks}
+        onChangeStatusTask={(id, status) => {
+          updateMainState((draftState: MAINSTATE) => {
+            draftState.tasks.find(task => task.id === id).status = status;
+          });
+        }}
         onDeleteTask={id => {
-          updateTodo((draftState: STATE) => {
+          updateMainState((draftState: MAINSTATE) => {
             draftState.tasks = draftState.tasks.filter(todo => todo.id !== id);
+          });
+        }}
+      />
+      <FilterTask
+        filter={mainState.filter}
+        rows={mainState.tasks}
+        onActive={() => {
+          updateMainState((draftState: MAINSTATE) => {
+            draftState.filter = draftState.filter = E_FILTERTASK.Active;
+          });
+        }}
+        onCompleted={() => {
+          updateMainState((draftState: MAINSTATE) => {
+            draftState.filter = draftState.filter = E_FILTERTASK.Completed;
+          });
+        }}
+        onAll={() => {
+          updateMainState((draftState: MAINSTATE) => {
+            draftState.filter = draftState.filter = E_FILTERTASK.All;
           });
         }}
       />
