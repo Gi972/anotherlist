@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 
-export function AddTodo({ onSubmit }) {
+export function AddTodo({ onSubmit }: { onSubmit: (value: string) => void }) {
   const [value, setValue] = useState("");
 
   const callSubmit = (e: { preventDefault: () => void }) => {
