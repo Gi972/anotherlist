@@ -1,4 +1,4 @@
 export const data = [
-  { title: "jc", status: true },
-  { title: "bea", status: false }
+  { id: 0, title: "jc", status: true },
+  { id: 1, title: "bea", status: false }
 ];
