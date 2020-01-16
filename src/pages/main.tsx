@@ -5,27 +5,36 @@ import { TODO } from "../types";
 import { useImmer } from "use-immer";
 import { of } from "rxjs";
 
-export function Main({ data }) {
-  const [todolist, updateTodo] = useImmer(data);
+type STATE = { tasks: TODO[] };
 
-  of(todolist).subscribe((data: TODO) => {
-    localStorage.setItem("myTodo", JSON.stringify(data));
+export function Main({ data }) {
+  const [todolist, updateTodo] = useImmer({ tasks: data } as STATE);
+
+  of(todolist).subscribe(data => {
+    localStorage.setItem("myTodo", JSON.stringify(data.tasks));
   });
 
   return (
     <>
       <AddTodo
         onSubmit={e => {
-          updateTodo(draftState => {
-            draftState.push({
-              id: draftState.length,
+          updateTodo((draftState: STATE) => {
+            draftState.tasks.push({
+              id: Date.now(),
               title: e,
               status: false
             } as TODO);
           });
         }}
       />
-      <TodoList rows={todolist} />
+      <TodoList
+        rows={todolist.tasks}
+        onDeleteTask={id => {
+          updateTodo((draftState: STATE) => {
+            draftState.tasks = draftState.tasks.filter(todo => todo.id !== id);
+          });
+        }}
+      />
     </>
   );
 }

@@ -1,12 +1,21 @@
 import * as React from "react";
-import { TODO } from "../types";
+import { TODO, ON_TODO } from "../types";
 import { Todo } from "./todo";
 
-export function TodoList({ rows = [] }: { rows: TODO[] }) {
+export function TodoList({
+  rows = [],
+  onDeleteTask
+}: { rows: TODO[] } & ON_TODO) {
   return (
     <ul>
       {rows.map(row => (
-        <Todo key={row.id} id={row.id} title={row.title} status={row.status} />
+        <Todo
+          key={row.id}
+          id={row.id}
+          title={row.title}
+          status={row.status}
+          onDeleteTask={onDeleteTask}
+        />
       ))}
     </ul>
   );
