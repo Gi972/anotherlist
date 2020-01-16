@@ -4,7 +4,7 @@ import { useState } from "react";
 export function AddTodo({ onSubmit }) {
   const [value, setValue] = useState("");
 
-  const callSubmit = e => {
+  const callSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     onSubmit(value);
     setValue("");
