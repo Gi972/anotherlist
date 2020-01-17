@@ -3,6 +3,7 @@ export type MAINSTATE = { tasks: TODO[]; filter: E_FILTERTASK };
 export type TODO = { id: number; title: string; status: boolean };
 
 export type ON_TODO = {
+  onEditTask: (id: number, value: string) => void;
   onDeleteTask: (id: number) => void;
   onChangeStatusTask: (id: number, status: boolean) => void;
 };

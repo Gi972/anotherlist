@@ -32,6 +32,11 @@ export function Main({ data }) {
       <TodoList
         filter={mainState.filter}
         rows={mainState.tasks}
+        onEditTask={(id, value) => {
+          updateMainState((draftState: MAINSTATE) => {
+            draftState.tasks.find(task => task.id === id).title = value;
+          });
+        }}
         onChangeStatusTask={(id, status) => {
           updateMainState((draftState: MAINSTATE) => {
             draftState.tasks.find(task => task.id === id).status = status;

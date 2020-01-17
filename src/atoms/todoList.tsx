@@ -1,12 +1,14 @@
 import * as React from "react";
 import { TASKLIST, ON_TODO, E_FILTERTASK, TODO } from "../types";
 import { Todo } from "./todo";
+import { Stack } from "@chakra-ui/core";
 
 export function TodoList({
   rows = [],
   filter,
   onDeleteTask,
-  onChangeStatusTask
+  onChangeStatusTask,
+  onEditTask
 }: TASKLIST & ON_TODO) {
   function filteredRows(rows: TODO[], filter: E_FILTERTASK) {
     switch (filter) {
@@ -20,7 +22,7 @@ export function TodoList({
   }
 
   return (
-    <ul>
+    <Stack spacing={3}>
       {filteredRows(rows, filter).map(row => (
         <Todo
           key={row.id}
@@ -29,8 +31,9 @@ export function TodoList({
           status={row.status}
           onDeleteTask={onDeleteTask}
           onChangeStatusTask={onChangeStatusTask}
+          onEditTask={onEditTask}
         />
       ))}
-    </ul>
+    </Stack>
   );
 }

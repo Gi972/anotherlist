@@ -1,5 +1,6 @@
 import * as React from "react";
 import { FILTERTASK, ON_FILTERTASK, E_FILTERTASK } from "../types";
+import { Box, RadioGroup, Radio } from "@chakra-ui/core";
 
 export function FilterTask(props: FILTERTASK & ON_FILTERTASK) {
   const { filter, onActive, onAll, onCompleted } = props;
@@ -16,8 +17,33 @@ export function FilterTask(props: FILTERTASK & ON_FILTERTASK) {
   }
 
   return (
-    <>
-      <label htmlFor="all">all</label>
+    <Box mt="5">
+      <RadioGroup isInline spacing={4} defaultValue={filter}>
+        <Radio
+          value={E_FILTERTASK.All}
+          onChange={switchFilter}
+          isChecked={filter === E_FILTERTASK.All}
+        >
+          all
+        </Radio>
+        <Radio
+          value={E_FILTERTASK.Active}
+          onChange={switchFilter}
+          isChecked={filter === E_FILTERTASK.Active}
+        >
+          Active
+        </Radio>
+        <Radio
+          value={E_FILTERTASK.Completed}
+          id="completed"
+          onChange={switchFilter}
+          isChecked={filter === E_FILTERTASK.Completed}
+        >
+          Completed
+        </Radio>
+      </RadioGroup>
+
+      {/* <label htmlFor="all">all</label>
       <input
         type="radio"
         name="choiceFilters"
@@ -43,7 +69,7 @@ export function FilterTask(props: FILTERTASK & ON_FILTERTASK) {
         id="completed"
         onChange={switchFilter}
         checked={filter === E_FILTERTASK.Completed}
-      />
-    </>
+      /> */}
+    </Box>
   );
 }
