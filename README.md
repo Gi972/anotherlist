@@ -27,3 +27,5 @@ Just for pleasure to write code and test things
 ## for future
 
 [Strapi](https://strapi.io)
+[react-hook-form](https://react-hook-form.com/)
+[React-icons](https://react-icons.netlify.com/)
