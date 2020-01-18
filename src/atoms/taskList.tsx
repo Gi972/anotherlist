@@ -1,6 +1,6 @@
 import * as React from "react";
 import { TASKLIST, ON_TODO, E_FILTERTASK, TODO } from "../types";
-import { Todo } from "./todo";
+import { Todo } from "./task";
 import { Stack } from "@chakra-ui/core";
 
 export function TodoList({

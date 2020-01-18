@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TODO, ON_TODO } from "../types";
 import {
   Icon,
@@ -34,18 +34,24 @@ export function Todo({
     onEditTask(id, e.target.value);
   };
 
+  useEffect(() => {
+    updateStatus(status);
+    updateText(title);
+  }, [status, title]);
+
+  console.log("upda", textcontent);
   return (
     <Box p="1">
       <InputGroup size="md">
         <IconButton
           height="none"
           variant="outline"
-          variantColor="gray"
+          variantColor="red"
           aria-label="Call Sage"
-          fontSize="18px"
+          fontSize="16px"
           icon="delete"
           onClick={deleteTask}
-          mr="1"
+          mr="2"
           w="16"
         />
         <Input

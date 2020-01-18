@@ -16,12 +16,14 @@ export type TASKLIST = {
 export type FILTERTASK = {
   rows: TODO[];
   filter: E_FILTERTASK;
+  history: MAINSTATE[];
 };
 
 export type ON_FILTERTASK = {
   onAll: () => void;
   onActive: () => void;
   onCompleted: () => void;
+  onUndo: () => void;
 };
 
 export enum E_FILTERTASK {
