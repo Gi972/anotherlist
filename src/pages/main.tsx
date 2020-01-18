@@ -1,18 +1,25 @@
 import * as React from "react";
-import { TodoList } from "../atoms/todoList";
-import { AddTodo } from "../atoms/addTodo";
+import { TodoList } from "../atoms/taskList";
+import { AddTodo } from "../atoms/addATask";
 import { FilterTask } from "../atoms/filterTask";
 import { TODO, MAINSTATE, E_FILTERTASK } from "../types";
-import { useImmer } from "use-immer";
+//import { useImmer } from "use-immer";
+import { useImmerTimeline } from "../utils/hooksExtensions";
 import { of } from "rxjs";
 
 export function Main({ data }) {
-  const [mainState, updateMainState] = useImmer({
+  // const [mainState, updateMainState] = useImmer({
+  //   tasks: data,
+  //   filter: E_FILTERTASK.All
+  // } as MAINSTATE);
+
+  const [mainState, updateMainState, history, cancel] = useImmerTimeline({
     tasks: data,
     filter: E_FILTERTASK.All
   } as MAINSTATE);
 
   of(mainState).subscribe(data => {
+    console.log("sub", data);
     localStorage.setItem("myTodo", JSON.stringify(data.tasks));
   });
 
@@ -27,6 +34,7 @@ export function Main({ data }) {
               status: false
             } as TODO);
           });
+          return "toto";
         }}
       />
       <TodoList
@@ -49,6 +57,7 @@ export function Main({ data }) {
         }}
       />
       <FilterTask
+        history={history}
         filter={mainState.filter}
         rows={mainState.tasks}
         onActive={() => {
@@ -65,6 +74,9 @@ export function Main({ data }) {
           updateMainState((draftState: MAINSTATE) => {
             draftState.filter = draftState.filter = E_FILTERTASK.All;
           });
+        }}
+        onUndo={() => {
+          cancel();
         }}
       />
     </>
